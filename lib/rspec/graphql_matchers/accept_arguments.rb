@@ -28,7 +28,13 @@ module RSpec
 
       def matches_argument?(arg_name, arg_type)
         actual_arg = actual_field.arguments[arg_name.to_s]
-        actual_arg && actual_arg.type.to_s == arg_type.to_s
+        return unless actual_arg
+        case actual_arg.class.to_s
+        when "GraphQL::Schema::Argument"
+          actual_arg.type.to_graphql.to_s == arg_type.to_s
+        when "GraphQL::Argument"
+          actual_arg.type.to_s == arg_type.to_s
+        end
       end
 
       def describe_arguments(what_args)
