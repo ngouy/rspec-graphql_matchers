@@ -31,6 +31,7 @@ module RSpec
         return unless actual_arg
         case actual_arg.class.to_s
         when "GraphQL::Schema::Argument"
+          actual_arg.type.to_s == arg_type.to_s ||
           actual_arg.type.to_graphql.to_s == arg_type.to_s
         when "GraphQL::Argument"
           actual_arg.type.to_s == arg_type.to_s
